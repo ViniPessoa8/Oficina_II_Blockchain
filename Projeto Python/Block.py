@@ -26,7 +26,7 @@ class Block:
         return self.hash
 
     def toString(self):
-        return "Block #" + str(self.__index) + " [previousHash : " + str(self.__previousHash) + ", " + "timestamp : " + str(self.__timestamp) + ", " + "data : " + str(self.__data) + ", Nonce:" + str(self.nonce) + "]"
+        return "Block #" + str(self.__index) + " [previousHash : " + str(self.__previousHash) + ", " + "timestamp : " + str(self.__timestamp) + ", " + "data : " + str(self.__data) + ", Nonce : " + str(self.nonce) + "]"
 
     def calculateHash(self):
         h = ""
