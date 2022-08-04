@@ -1,5 +1,5 @@
 import streamlit as st
-from treinador import data as pokedata
+from Treinador import data as pokedata
 
 nomes_treinadores = pokedata.keys()
 
