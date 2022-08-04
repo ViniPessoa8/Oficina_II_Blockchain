@@ -1,13 +1,17 @@
 from Blockchain import Blockchain
 from Transaction import Transaction
-from Treinador import data
-import json
+import streamlit as st
+
+data = st.session_state['data']
 
 class SmartContract:
     def __init__(self, blockchain):
         self.blockchain = blockchain
     
     def getData(self):
+
+        st.session_state['data'] = data
+
         out = ""
         for key in data.keys():
             out += key + ": " + str(data[key].pokemons) + "\n"
