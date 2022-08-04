@@ -3,6 +3,14 @@ class treinador:
         self.id = id
         self.pokemons = pokemons
 
+    def addPokemon(self, pokemon):
+        if pokemon not in (None, ''):
+            self.pokemons.append(pokemon)
+        
+    def removePokemon(self, pokemon):
+        if pokemon not in (None, ''):
+            self.pokemons.remove(pokemon)
+        
 
 data = {
     "Ash":      treinador(1, ["Pikachu", "Bulbasaur"]),

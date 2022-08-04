@@ -47,7 +47,7 @@ class Block:
         self.nonce = 0
         
         while (difficulty * "0") != self.hash[:difficulty]:
-            print((difficulty * "0") + " | " + self.hash[:difficulty] + " | " + str(self.nonce) + " | " + self.hash)
+            # print((difficulty * "0") + " | " + self.hash[:difficulty] + " | " + str(self.nonce) + " | " + self.hash)
             self.nonce += 1
             self.hash = self.calculateHash()
 
