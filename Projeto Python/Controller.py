@@ -6,6 +6,13 @@ from Transaction import Transaction
 
 SESSION_DATA = 'data'
 SESSION_LOG = 'log'
+PATH_IMG_POKEBOLA = "res\pokebola.png"
+
+blockchain = Blockchain(2)
+sc = SmartContract(blockchain)
+
+if SESSION_DATA in st.session_state:
+    del st.session_state[SESSION_DATA]
 
 blockchain = Blockchain(2)
 sc = SmartContract(blockchain)
@@ -19,12 +26,10 @@ def initialize_session():
         st.session_state['data'] = {
             "Ash":      Treinador(1, ["Pikachu", "Bulbasaur"]),
             "Garry":    Treinador(2, ["Raichu", "Ivysaur"]),
-            "Lais":     Treinador(3, ["Ratata", "Bulbasaur"]),
-            "Vini":     Treinador(4, ["Charmamder", "Bulbasaur"]),
+            "Lais":     Treinador(3, ["Rattata", "Bulbasaur", "Riolu", "Squirtle"]),
+            "Vini":     Treinador(4, ["Charmander", "Bulbasaur", "Mewtwo"]),
             "Veronica": Treinador(5, ["Squirtle", "Bulbasaur"]),
-            "Tersio":   Treinador(6, ["Eevee", "Bulbasaur"]),
-            "Eca":      Treinador(7, ["Riolu", "Bulbasaur"]),
-            "Poppi":    Treinador(8, ["Mewtwo", "Bulbasaur"])
+            "Tersio":   Treinador(6, ["Eevee", "Bulbasaur"])
         }
 
 def trocar(nome_treinador_01, nome_treinador_02, id_pokemon):
@@ -82,3 +87,5 @@ def show_blockchain_log():
     
     # Block #0 [previousHash : 0, timestamp : 1659589335.969274, data : Genesis Block, Nonce : 220] Block #1 [previousHash : 002d86ef185cc273cd032c184cb52e2a013b7dfc0ed94d684d111d87addea33c, timestamp : 1659589335.972266, data : <Transaction.Transaction object at 0x000002425315F2E0>, Nonce : 617]
     pass
+
+initialize_session()
