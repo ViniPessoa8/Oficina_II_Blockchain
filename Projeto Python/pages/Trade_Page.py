@@ -1,9 +1,8 @@
 import streamlit as st
-from Treinador import Treinador
-
-from Blockchain import Blockchain
-from SmartContract import SmartContract
-from Transaction import Transaction
+from ..Treinador import Treinador
+from ..Blockchain import Blockchain
+from ..SmartContract import SmartContract
+from ..Transaction import Transaction
 
 
 
