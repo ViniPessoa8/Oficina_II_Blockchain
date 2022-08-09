@@ -1,5 +1,5 @@
 import streamlit as st
-from Treinador import treinador
+from Treinador import Treinador
 
 from Blockchain import Blockchain
 from SmartContract import SmartContract
@@ -15,14 +15,14 @@ if SESSION_LOG not in st.session_state:
 
 if SESSION_DATA not in st.session_state:
     st.session_state['data'] = {
-        "Ash":      treinador(1, ["Pikachu", "Bulbasaur"]),
-        "Garry":    treinador(2, ["Raichu", "Ivysaur"]),
-        "Lais":     treinador(3, ["Ratata", "Bulbasaur"]),
-        "Vini":     treinador(4, ["Charmamder", "Bulbasaur"]),
-        "Veronica": treinador(5, ["Squirtle", "Bulbasaur"]),
-        "Tersio":   treinador(6, ["Eevee", "Bulbasaur"]),
-        "Eca":      treinador(7, ["Riolu", "Bulbasaur"]),
-        "Poppi":    treinador(8, ["Mewtwo", "Bulbasaur"])
+        "Ash":      Treinador(1, ["Pikachu", "Bulbasaur"]),
+        "Garry":    Treinador(2, ["Raichu", "Ivysaur"]),
+        "Lais":     Treinador(3, ["Ratata", "Bulbasaur"]),
+        "Vini":     Treinador(4, ["Charmamder", "Bulbasaur"]),
+        "Veronica": Treinador(5, ["Squirtle", "Bulbasaur"]),
+        "Tersio":   Treinador(6, ["Eevee", "Bulbasaur"]),
+        "Eca":      Treinador(7, ["Riolu", "Bulbasaur"]),
+        "Poppi":    Treinador(8, ["Mewtwo", "Bulbasaur"])
     }
 
 
