@@ -7,6 +7,8 @@ from Transaction import Transaction
 SESSION_DATA = 'data'
 SESSION_LOG = 'log'
 
+PATH_IMG_POKEBOLA = "res\pokebola.png"
+
 def initialize_session():
 
     if SESSION_LOG not in st.session_state: 
@@ -16,8 +18,8 @@ def initialize_session():
         st.session_state['data'] = {
             "Ash":      Treinador(1, ["Pikachu", "Bulbasaur"]),
             "Garry":    Treinador(2, ["Raichu", "Ivysaur"]),
-            "Lais":     Treinador(3, ["Ratata", "Bulbasaur"]),
-            "Vini":     Treinador(4, ["Charmamder", "Bulbasaur"]),
+            "Lais":     Treinador(3, ["Rattata", "Bulbasaur"]),
+            "Vini":     Treinador(4, ["Charmander", "Bulbasaur"]),
             "Veronica": Treinador(5, ["Squirtle", "Bulbasaur"]),
             "Tersio":   Treinador(6, ["Eevee", "Bulbasaur"]),
             "Eca":      Treinador(7, ["Riolu", "Bulbasaur"]),
