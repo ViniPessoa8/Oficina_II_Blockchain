@@ -1,7 +1,5 @@
-from cProfile import Profile
 import streamlit as st
 import Controller as ctrl
-import pages.Profile as profile
 
 ctrl.initialize_session()
 

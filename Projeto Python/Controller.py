@@ -1,4 +1,5 @@
 import streamlit as st
+import requests
 from Treinador import Treinador
 from Blockchain import Blockchain
 from SmartContract import SmartContract
@@ -87,5 +88,18 @@ def show_blockchain_log():
     
     # Block #0 [previousHash : 0, timestamp : 1659589335.969274, data : Genesis Block, Nonce : 220] Block #1 [previousHash : 002d86ef185cc273cd032c184cb52e2a013b7dfc0ed94d684d111d87addea33c, timestamp : 1659589335.972266, data : <Transaction.Transaction object at 0x000002425315F2E0>, Nonce : 617]
     pass
+
+def get_sprite_url(pokemon_name):
+    api = f"https://pokeapi.glitch.me/v1/pokemon/{pokemon_name}"
+    res = requests.get(api)
+
+    url = 'foi nao'
+
+    try:
+        res = res.json()
+        return res[0]["sprite"]
+    except:
+        url = PATH_IMG_POKEBOLA
+        return url
 
 initialize_session()
