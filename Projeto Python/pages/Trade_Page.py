@@ -82,12 +82,14 @@ def show_trade_form():
 
     id_treinador_02 = st.selectbox(label="Treinador 02", options=nomes_sem_treinador_01)
     
+    col_1, _, _, col_4 = st.columns(4)
 
-    if st.button("E N V I A R"):
-        trocar(id_treinador_01, id_treinador_02, id_pokemon)
-
-    if st.button("Show Log"):
-        show_blockchain_log()
+    with col_1:
+        if st.button("E N V I A R"):
+            trocar(id_treinador_01, id_treinador_02, id_pokemon)
+    with col_4:
+        if st.button("Show Log"):
+            show_blockchain_log()
 
 
 
