@@ -7,6 +7,7 @@ ctrl.initialize_session()
 pokedata = st.session_state[ctrl.SESSION_DATA]
 users = pokedata.keys() 
 
+st.header("Transistions")
 
 transactions = ctrl.blockchain.blocks
 for index, transaction in enumerate(transactions):
