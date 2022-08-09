@@ -17,10 +17,13 @@ def print_trainer(name = "Ash"):
 
     cols = st.columns(6)
 
-    for i in range(len(pokemons)):
-        with cols[i]:
-            st.write(pokemons[i])
-            st.image(control.get_sprite_url(pokemons[i]), width=50)
+    if len(pokemons) == 0:
+        st.write("(No pokemons)")
+    else:
+        for i in range(len(pokemons)):
+            with cols[i]:
+                st.write(pokemons[i])
+                st.image(control.get_sprite_url(pokemons[i]), width=50)
 
 for name in data.keys():
     print_trainer(name)

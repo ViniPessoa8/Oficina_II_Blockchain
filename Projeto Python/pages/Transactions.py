@@ -9,18 +9,6 @@ users = pokedata.keys()
 
 
 transactions = ctrl.blockchain.blocks
-# d = {}
-
-# if len(transactions) > 1:
-#     d = {"Sender": (transaction.getData().sender for transaction in transactions if transaction.getData() != "Genesis Block"),
-#          "Pokemon": (transaction.getData().pokemon for transaction in transactions if transaction.getData() != "Genesis Block"),
-#          "Receiver": (transaction.getData().receiver for transaction in transactions if transaction.getData() != "Genesis Block"),
-#          "Hash": (transaction.hash for transaction in transactions if transaction.getData() != "Genesis Block")}
-
-# df = pd.DataFrame(d)
-# st.table(df)
-
-# new Layout
 for index, transaction in enumerate(transactions):
     if transaction.getData() == "Genesis Block":
         continue
@@ -29,6 +17,8 @@ for index, transaction in enumerate(transactions):
     column1, column2, column3, column4, column5 = st.columns(5)
     
     with container:
+        st.write("%s : %s" % (index,transaction.hash))
+        
         with column1:
             st.subheader(transaction.getData().sender)
         
@@ -45,17 +35,5 @@ for index, transaction in enumerate(transactions):
         with column5:
             st.subheader(transaction.getData().receiver)
     
-        st.write("%s : %s" % (index,transaction.hash))
+        
     
-
-
-# for element in users:
-#     user_txt = element + ": "
-    
-#     for pokemon in pokemons:
-#         user_txt += "%s, " % pokemon
-    
-#     st.write(user_txt)
-    # st.table(df)
-
-# st.dataframe(pokedata)
