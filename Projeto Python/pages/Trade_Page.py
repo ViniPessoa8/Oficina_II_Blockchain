@@ -1,6 +1,11 @@
 import streamlit as st
 import Controller as ctrl
 
+ctrl.initialize_session()
+
+pokedata = st.session_state[ctrl.SESSION_DATA]
+nomes_treinadores = pokedata.keys()
+
 def show_blockchain_log():
 
     log = st.session_state[ctrl.SESSION_LOG]
@@ -25,10 +30,10 @@ def show_blockchain_log():
 
 def show_trade_form():
 
-    id_treinador_01 = st.selectbox(label="Treinador 01", options=ctrl.nomes_treinadores)
-    id_pokemon = st.selectbox(label="select a Pokemon", options=ctrl.pokedata[id_treinador_01].pokemons)
+    id_treinador_01 = st.selectbox(label="Treinador 01", options=nomes_treinadores)
+    id_pokemon = st.selectbox(label="select a Pokemon", options=pokedata[id_treinador_01].pokemons)
 
-    nomes_sem_treinador_01 = list(filter(lambda x: x != id_treinador_01, ctrl.nomes_treinadores))
+    nomes_sem_treinador_01 = list(filter(lambda x: x != id_treinador_01, nomes_treinadores))
 
     id_treinador_02 = st.selectbox(label="Treinador 02", options=nomes_sem_treinador_01)
     
