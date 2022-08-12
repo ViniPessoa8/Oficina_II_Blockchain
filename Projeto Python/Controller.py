@@ -1,5 +1,8 @@
+import requests
 import streamlit as st
 import requests
+import matplotlib.image as mpimg
+from os.path import exists
 from Treinador import Treinador
 from Blockchain import Blockchain
 from SmartContract import SmartContract
@@ -7,7 +10,7 @@ from Transaction import Transaction
 
 SESSION_DATA = 'data'
 SESSION_LOG = 'log'
-PATH_IMG_POKEBOLA = "res\pokebola.png"
+PATH_IMG_POKEBOLA = "res/pokebola.png"
 
 blockchain = Blockchain(2)
 sc = SmartContract(blockchain)
@@ -90,15 +93,41 @@ def show_blockchain_log():
     pass
 
 def get_sprite_url(pokemon_name):
-    api = f"https://pokeapi.glitch.me/v1/pokemon/{pokemon_name}"
-    res = requests.get(api)
+    """
+    Description
+        Download sprite for a specific pokemon. 
+        If already downloaded, load image from storage.
 
-    url = 'foi nao'
+    Parameters
+        @pokemon_name: str - Exact name of the desired pokemon
+    
+    Return 
+        If not downloaded: an URL of the image (png)
+        If downloaded: An image of a pokemon loaded with matplotlib.
+        If not found: Pokeball image (png) 
+    """
 
+    path = 'res/Pokemon_Images/%s.png' % pokemon_name # Path to save image
+    
     try:
-        res = res.json()
-        return res[0]["sprite"]
+        if not exists(path): 
+            # Request to PokeAPI
+            api = f"https://pokeapi.glitch.me/v1/pokemon/{pokemon_name}"
+            res = requests.get(api)
+            res = res.json()
+            img_url = res[0]["sprite"] # Sprite URL
+        
+            # Download the file
+            img_data = requests.get(img_url).content
+            with open(path, 'wb') as writer:
+                writer.write(img_data) # Save file
+            return img_data
+        else:
+            # Get downloaded image
+            img = mpimg.imread(path)
+            return img
     except:
+        # Return Pokeball if no pokemon was found
         url = PATH_IMG_POKEBOLA
         return url
 
