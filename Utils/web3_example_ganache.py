@@ -1,12 +1,11 @@
 """
 Title: Example of Web3.py using Ganache Server as provider
-author: Vinicius Pessoa
+Author: Vinicius Pessoa
 
 Prerequisites:
     - Web3.py installed (pip install web3)
     - Ganache server installed and running.
     - Set "ganache_server_ip" to your ganache server ip.
-    - Set "user1_key" and "user2_key" using keys from your ganache server.
 
 Running:
     Simply run the script.
@@ -20,12 +19,12 @@ ganache_server_ip = "http://127.0.0.1:7545"
 w3 = Web3(Web3.HTTPProvider(ganache_server_ip))
 
 # Users
-user1_key = "0xea198De3B61248aABf2b756755Aea01997c8d484"
-user2_key = "0xd83268f74FB1DFD42B5A8a7Fe2921e8c8C35fe8F"
+user1_key = str(w3.eth.accounts[0])
+user2_key = str(w3.eth.accounts[1])
 
 # Data to be used in transaction
 _data = "data_sample"
-_hex_data = w3.toHex(_data) # converts data to Hexadecimal
+_hex_data = w3.toHex(text=_data) # converts data to Hexadecimal
 
 # Transaction Example
 transaction = {
