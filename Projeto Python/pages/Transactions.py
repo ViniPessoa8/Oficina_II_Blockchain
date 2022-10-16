@@ -7,9 +7,12 @@ ctrl.initialize_session()
 pokedata = st.session_state[ctrl.SESSION_DATA]
 users = pokedata.keys() 
 
-st.header("Transistions")
+st.header("Transactions")
 
 transactions = ctrl.blockchain.blocks
+
+if len(transactions) == 1:
+    st.write("No transactions yet.")
 for index, transaction in enumerate(transactions):
     if transaction.getData() == "Genesis Block":
         continue
