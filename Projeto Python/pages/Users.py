@@ -2,6 +2,7 @@ import streamlit as st
 import Controller as control
 
 control.initialize_session()
+
 data = control.st.session_state[control.SESSION_DATA]
 
 def print_trainer(name = "Ash"):
