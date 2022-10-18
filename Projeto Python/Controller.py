@@ -10,7 +10,10 @@ import os
 
 SESSION_DATA = 'data'
 SESSION_LOG = 'log'
+
 PATH_IMG_POKEBOLA = "res\pokebola.png"
+PATH_RES = "res\\pokemons\\"
+PATH_API = "https://pokeapi.glitch.me/v1/pokemon/"
 
 PRIV_KEY = "0x57060eD7BbFEe82aDe47317A1Cb508090dac7119"
 
@@ -98,11 +101,11 @@ def show_blockchain_log():
 
 def get_sprite_url(pokemon_name):
 
-    url = f"res\\{pokemon_name}.png"
+    res_path = f"{PATH_RES}{pokemon_name}.png"
 
-    if os.path.isfile(url): return url
+    if os.path.isfile(res_path): return res_path
 
-    api = f"https://pokeapi.glitch.me/v1/pokemon/{pokemon_name}"
+    api = f"{PATH_API}{pokemon_name}"
     res = requests.get(api)
 
     try:
@@ -111,14 +114,13 @@ def get_sprite_url(pokemon_name):
 
         try:
             image_data = requests.get(url).content
-            with open(f'res\\{pokemon_name}.png', 'wb') as handler:
+            with open(res_path, 'wb') as handler:
                 handler.write(image_data)
         except: pass
 
         return url
     except:
-        url = PATH_IMG_POKEBOLA
-        return url
+        return PATH_IMG_POKEBOLA
 
 # initialize_session()
 
