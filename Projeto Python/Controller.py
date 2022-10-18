@@ -1,3 +1,4 @@
+from cgitb import text
 from mimetypes import init
 import streamlit as st
 import requests
@@ -9,6 +10,9 @@ from Transaction import Transaction
 SESSION_DATA = 'data'
 SESSION_LOG = 'log'
 PATH_IMG_POKEBOLA = "res\pokebola.png"
+
+PRIV_KEY = "0x57060eD7BbFEe82aDe47317A1Cb508090dac7119"
+
 
 blockchain = Blockchain(2)
 sc = SmartContract(blockchain)
@@ -51,12 +55,13 @@ def show_trade_form():
     pokedata = st.session_state[SESSION_DATA]
     nomes_treinadores = pokedata.keys()
 
-    id_treinador_01 = st.selectbox(label="Treinador 01", options=nomes_treinadores)
-    id_pokemon = st.selectbox(label="select a Pokemon", options=pokedata[id_treinador_01].pokemons)
+    id_treinador_01 = st.text_input(label="Treinador 01", placeholder="0x57060eD7BbFEe82aDe47317A1Cb508090dac7119", value=PRIV_KEY)
+    # id_pokemon = st.selectbox(label="select a Pokemon", options=pokedata[id_treinador_01].pokemons)
 
+    # Lista de nomes sem o id do treinador 1
     nomes_sem_treinador_01 = list(filter(lambda x: x != id_treinador_01, nomes_treinadores))
 
-    id_treinador_02 = st.selectbox(label="Treinador 02", options=nomes_sem_treinador_01)
+    id_treinador_02 = st.text_input(label="Treinador 02", placeholder="0x0d4ba3726fc5BCf535AA3BA427758C85d1e959D5")
     
     col_1, col_2, _, col_4 = st.columns(4)
 
