@@ -29,12 +29,18 @@ contract Pokemon {
     }
 
     function changeOwner(address newOwner) public isOwner {
+        address oldOwner = owner;
         owner = newOwner;
+        emit ownerChanged(oldOwner, newOwner);
     }
 
     function takeDamage(uint8 damage) public {
         life -= damage;
         if (life < 0) life = 0;
+    }
+
+    function getOwner() view public returns(address) {
+        return owner;
     }
 
 }
