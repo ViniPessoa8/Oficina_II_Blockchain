@@ -1,11 +1,12 @@
 from cgitb import text
+from email.mime import image
 from mimetypes import init
 import streamlit as st
 import requests
 from Blockchain import Blockchain
 from SmartContract import SmartContract
 from Transaction import Transaction
-
+import os
 
 SESSION_DATA = 'data'
 SESSION_LOG = 'log'
@@ -96,14 +97,25 @@ def show_blockchain_log():
     pass
 
 def get_sprite_url(pokemon_name):
+
+    url = f"res\\{pokemon_name}.png"
+
+    if os.path.isfile(url): return url
+
     api = f"https://pokeapi.glitch.me/v1/pokemon/{pokemon_name}"
     res = requests.get(api)
 
-    url = 'foi nao'
-
     try:
         res = res.json()
-        return res[0]["sprite"]
+        url = res[0]["sprite"]
+
+        try:
+            image_data = requests.get(url).content
+            with open(f'res\\{pokemon_name}.png', 'wb') as handler:
+                handler.write(image_data)
+        except: pass
+
+        return url
     except:
         url = PATH_IMG_POKEBOLA
         return url
