@@ -42,5 +42,18 @@ contract Pokemon {
     function getOwner() view public returns(address) {
         return owner;
     }
+    
+    function getLife() view public returns(uint8) {
+        return life;
+    }
+
+    function getAttack() view public returns(uint8) {
+        return attack;
+    }
+
+    function getDefense() view public returns(uint8) {
+        return defense;
+    }
+
 
 }
