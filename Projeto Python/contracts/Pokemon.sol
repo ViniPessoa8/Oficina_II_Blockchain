@@ -39,6 +39,10 @@ contract Pokemon {
         if (life < 0) life = 0;
     }
 
+    function getName() view public returns(string memory) {
+        return name;
+    }
+    
     function getOwner() view public returns(address) {
         return owner;
     }
