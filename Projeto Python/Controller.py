@@ -16,12 +16,6 @@ blockchain = Blockchain(2)
 sc = SmartContract(blockchain)
 pokemonController = pc.PokemonController()
 
-# if SESSION_DATA in st.session_state:
-#     del st.session_state[SESSION_DATA]
-
-# blockchain = Blockchain(2)
-# sc = SmartContract(blockchain)
-
 def initialize_session():
 
     if SESSION_LOG not in st.session_state: 
@@ -55,16 +49,13 @@ def _trocar(user1, user2, contract_address):
     st.session_state[SESSION_LOG] = "Transaction Hash: %s\nTransaction: %s\n" % (hash, transaction)
     
 def show_trade_form():
-    pokedata = st.session_state[SESSION_DATA]
-    nomes_treinadores = pokedata.keys()
+    # pokedata = st.session_state[SESSION_DATA]
+    # nomes_treinadores = pokedata.keys()
 
     id_treinador_01 = st.text_input(label="Treinador 01", value = "0xC18FEad54d592a187624C01E4adcFB5B0e5970fe", placeholder="0xC18FEad54d592a187624C01E4adcFB5B0e5970fe")
     id_pokemon = st.text_input(label="select a Pokemon", value = "0x27A69e7C00D775fb73d7c21F92E3fae21ec2e0d2", placeholder="0x27A69e7C00D775fb73d7c21F92E3fae21ec2e0d2")
-
-    nomes_sem_treinador_01 = list(filter(lambda x: x != id_treinador_01, nomes_treinadores))
-
     id_treinador_02 = st.text_input(label="Treinador 02", value = "0x961814Ab5a9abD02a557Fb3cade72e864bfbea84", placeholder="0x961814Ab5a9abD02a557Fb3cade72e864bfbea84")
-    
+
     col_1, col_2, _, col_4 = st.columns(4)
 
     with col_1:
@@ -86,6 +77,10 @@ def show_blockchain_log():
 
     count = 0
     log = log.split('\n')
+    if (not log): 
+        st.write("No available log.")
+        return
+
     for line in log:
         # st.write(f"Block #{count}")
         count += 1
