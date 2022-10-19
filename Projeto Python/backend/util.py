@@ -14,9 +14,10 @@ class Constants:
     # Users Info
     PRIVATE_KEY = "8f3f7df85339f0a4a0ea68da2786c14a42ebd7bb18f423bc88168c4efe51215b" # User 1
     # PRIVATE_KEY = "572ca263ddf4a9b91473384be58148c008e2e489c36f74ab9f0f56e4b6925227" # User 2
+    USER1_ADDRESS = "0xC18FEad54d592a187624C01E4adcFB5B0e5970fe"
 
     # Misc
     ZERO_HASH = "0x0000000000000000000000000000000000000000000000000000000000000000"
-
-    USER1_ADDRESS = "0xC18FEad54d592a187624C01E4adcFB5B0e5970fe"
+    CONTRACTS_RELATIVE_PATH = "Projeto Python\\contracts\\"
+    CONTRACTS_ABSOLUTE_PATH = "C:\\Users\\vinip\\Documents\\Git\\Oficina_II_Blockchain\\Projeto Python\\contracts\\"
 
