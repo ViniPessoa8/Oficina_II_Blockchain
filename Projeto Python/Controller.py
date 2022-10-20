@@ -12,6 +12,9 @@ import os
 
 SESSION_DATA = 'data'
 SESSION_LOG = 'log'
+SESSION_PRIVATE_KEY = 'private_key'
+SESSION_LOG_IN = 'login'
+
 
 PATH_IMG_POKEBOLA = "res\pokebola.png"
 PATH_RES = "res\\pokemons\\"
