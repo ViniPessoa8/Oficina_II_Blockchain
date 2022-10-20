@@ -83,6 +83,7 @@ def get_contract_abi(compiled_solidity):
 
 @staticmethod
 def initiate_contract(compiled_contract, *args):
+    print("[INFO] Initiating contract...")
     bytecode = get_contract_bytecode_from_compiled_solidity(compiled_contract)
     abi = get_contract_abi(compiled_contract)
 
@@ -100,11 +101,15 @@ def initiate_contract(compiled_contract, *args):
     tx_create = w3.eth.account.sign_transaction(construct_txn, constants.PRIVATE_KEY)
     # tx_hash = contract.constructor(*args).transact({"from": constants.USER1_ADDRESS})
     tx_hash = w3.eth.send_raw_transaction(tx_create.rawTransaction)
+    # print(tx_create);
+    # print(w3.toHex(tx_hash))
     tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
     # sleep(10)
-    print("TX RECEIPT -------------> %s" % tx_receipt)
+    # print("TX RECEIPT -------------> %s" % tx_receipt)
 
-    return w3.eth.contract(tx_receipt["contractAddress"], abi=abi)
+    print("Contract Address: %s" % tx_receipt["contractAddress"])
+    contract = w3.eth.contract(tx_receipt["contractAddress"], abi=abi) 
+    return contract
 
 @staticmethod
 def initiate_contract_by_filename(filename, *args):
