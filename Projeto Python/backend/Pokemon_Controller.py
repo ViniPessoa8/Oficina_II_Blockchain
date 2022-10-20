@@ -5,7 +5,8 @@ import Contract_Controller
 import json
 
 w3 = Web3(HTTPProvider(constants.PROVIDER_URL))
-w3.eth.default_account = constants.USER1_ADDRESS
+abi = Contract_Controller.get_contract_abi_by_filename("Pokemon")
+w3.eth.default_account = w3.eth.accounts[0]
 
 @staticmethod
 def get_life(contract):
@@ -41,7 +42,7 @@ def get_defense(contract):
 def change_owner(oldOwner, newOwner, contract):
     newOwner = Web3.toChecksumAddress(newOwner)
     nonce = w3.eth.getTransactionCount(oldOwner)
-    contract = w3.eth.contract(address=contract, abi=constants.CONTRACT_ABI)
+    contract = w3.eth.contract(address=contract, abi=abi)
 
     print("%s -----> %s" % (oldOwner, newOwner))
 
@@ -87,7 +88,7 @@ def take_damage(damage, contract):
         print("O contrato não pertence ao seu usuário.") 
 
 @staticmethod
-def get_all_blocks(self):
+def get_all_blocks():
     blocks = []
     latest_block = w3.eth.get_block("latest") # latest block
     blocks.append(latest_block["hash"])
@@ -113,59 +114,38 @@ def get_all_blocks(self):
     return blocks
 
 @staticmethod
-def get_available_pokemons(self):
+def get_available_pokemons():
     pokemons = []
     blocks_hash = get_all_blocks()
     for hash in blocks_hash:
         hash = w3.toHex(hash)
-
         block = w3.eth.get_block(hash)
-        transactions = block["transactions"]
-        print(transactions)
         
         for transaction_hash in block["transactions"]:
             t_hash = w3.toHex(transaction_hash) 
-            print(t_hash)
+            print("transaction hash: %s" % t_hash)
 
             transaction = w3.eth.get_transaction(t_hash)
+            print(transaction)
 
             _to = transaction["to"]
-            print(_to)
+            print("contract address: %s" % _to)
 
             if _to not in pokemons and _to:
-                pokemons.append(_to)
-            
+                contract = w3.eth.contract(address=_to, abi=abi)
+                print(get_name(contract))
+                pokemons.append(contract)
+
     return pokemons
 
 if __name__ == "__main__":
     print(w3.api)
 
     initiated_contract = Contract_Controller.initiate_contract_by_filename("Pokemon", "Pikachu", 10, 9)
+    initiated_contract = Contract_Controller.initiate_contract_by_filename("Pokemon", "Pikachu", 10, 9)
+    initiated_contract = Contract_Controller.initiate_contract_by_filename("Pokemon", "Pikachu", 10, 9)
+    print(initiated_contract)
     print(get_name(initiated_contract))
-# contract.initiate_contract(pok)
-# print(contract.get_contracts_abi("Pokemon"))
-
-# pokemons = pokemon_controller.get_available_pokemons()
-# print(pokemons)
-
-# for contract_hash in pokemons:
-#     contract = pokemon_controller.w3.eth.contract(contract_hash, abi=constants.CONTRACT_ABI)
-#     # TODO: GET POKEMON NAME
-#     pokemon_name = pokemon_controller.get_name(contract)
-#     print(pokemon_name)
     
-# oldOwner = Web3.toChecksumAddress(pokemon_controller.w3.eth.accounts[0])
-# newOwner = Web3.toChecksumAddress(pokemon_controller.w3.eth.accounts[1])
-# print(oldOwner)
-# print(newOwner)
-
-# contract = Web3.toChecksumAddress("0x27A69e7C00D775fb73d7c21F92E3fae21ec2e0d2")
-# print("Contract: %s" % contract)
-
-# print(pokemon_controller.w3.eth.accounts[1])
-# pokemon_controller.change_owner(oldOwner, newOwner, contract)
-# print("Life: %s" % pokemon_controller.get_life())
-# pokemon_controller.take_damage(2)
-# print("Life: %s" % pokemon_controller.get_life())
-
-# pokemon_controller.get_available_pokemons()
+    pokemons = get_available_pokemons()
+    print("Pokemons: %s" % pokemons)
