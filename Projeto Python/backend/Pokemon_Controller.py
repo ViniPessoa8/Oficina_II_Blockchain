@@ -1,8 +1,6 @@
-from xml.dom import ValidationErr
 from web3 import Web3, HTTPProvider
 from util import Constants as constants
 import Contract_Controller
-import json
 
 w3 = Web3(HTTPProvider(constants.PROVIDER_URL))
 abi = Contract_Controller.get_contract_abi_by_filename("Pokemon")
@@ -60,10 +58,7 @@ def change_owner(oldOwner, newOwner, contract_address):
 
     try:
         signed_transaction = w3.eth.account.sign_transaction(transaction, private_key=constants.PRIVATE_KEY)
-        # print(signed_transaction)
         transaction_hash = w3.eth.send_raw_transaction(signed_transaction.rawTransaction)
-        # print(transaction_hash)
-        # print(Web3.toHex(transaction_hash))
         owner = newOwner
 
         print(("Transaction Hash: %s" % w3.toHex(transaction_hash)))
@@ -81,7 +76,6 @@ def take_damage(damage, contract):
     transaction = contract.functions.takeDamage(damage).buildTransaction({
         "gasPrice": w3.eth.gas_price,
         "chainId": constants.NETWORK_ID,
-        # "from": owner,
         "nonce": nonce,
     })
 
@@ -110,8 +104,6 @@ def get_all_blocks():
 
         # Checks if block has parent
         if parent_hash == constants.ZERO_HASH:
-            # print(parent_block)        
-            # print("ZERO HASH")
             break
         else:
             blocks.append(parent_block["hash"]) # add block to the list
@@ -130,20 +122,11 @@ def get_available_pokemons():
 
         for transaction_hash in block["transactions"]:
             t_hash = w3.toHex(transaction_hash) 
-            # print("transaction hash: %s" % t_hash)
-
             transaction = w3.eth.get_transaction(t_hash)
-            # print(transaction)
-
-            # keys = list(transaction.keys)
-            # TODO: Transaction Keys
-            # print("transaction.keys> %s" % transaction.values)
-            # break
             _to = transaction["to"]
 
             if _to not in pokemons and _to:
                 contract = w3.eth.contract(address=_to, abi=abi)
-                # print("Contract: %s" % contract)
                 try:
                     pokemon_name = get_name(contract)
                     if pokemon_name not in pokemons.keys():
@@ -164,13 +147,10 @@ if __name__ == "__main__":
     initialize_pokemon("Charizard", 9, 8)
     initialize_pokemon("Bulbassauro", 6, 5)
     initiated_contract = initialize_pokemon("Pikachu", 10, 9)
-    # print(initiated_contract)
-    # print(get_name(initiated_contract))
     
-    # Getting All existing pokemons TODO: not working
+    # Getting All existing pokemons
     pokemons = get_available_pokemons()
     print("Pokemons: %s" % pokemons)
-    # print("Pokemons: %s" % json.dumps(json.loads(str(pokemons)), indent=4))
 
     # Pokemons Takes Damage
     take_damage(2, initiated_contract)
