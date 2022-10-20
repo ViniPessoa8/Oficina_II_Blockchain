@@ -1,3 +1,5 @@
+from cgitb import text
+from email.mime import image
 from mimetypes import init
 from pydoc import text
 import streamlit as st
@@ -6,11 +8,17 @@ from Blockchain import Blockchain
 from SmartContract import SmartContract
 from Transaction import Transaction
 import backend.Pokemon_Controller as pc
-
+import os
 
 SESSION_DATA = 'data'
 SESSION_LOG = 'log'
+
 PATH_IMG_POKEBOLA = "res\pokebola.png"
+PATH_RES = "res\\pokemons\\"
+PATH_API = "https://pokeapi.glitch.me/v1/pokemon/"
+
+PRIV_KEY = "0x57060eD7BbFEe82aDe47317A1Cb508090dac7119"
+
 
 blockchain = Blockchain(2)
 sc = SmartContract(blockchain)
@@ -98,17 +106,27 @@ def show_blockchain_log():
     pass
 
 def get_sprite_url(pokemon_name):
-    api = f"https://pokeapi.glitch.me/v1/pokemon/{pokemon_name}"
-    res = requests.get(api)
 
-    url = 'foi nao'
+    res_path = f"{PATH_RES}{pokemon_name}.png"
+
+    if os.path.isfile(res_path): return res_path
+
+    api = f"{PATH_API}{pokemon_name}"
+    res = requests.get(api)
 
     try:
         res = res.json()
-        return res[0]["sprite"]
-    except:
-        url = PATH_IMG_POKEBOLA
+        url = res[0]["sprite"]
+
+        try:
+            image_data = requests.get(url).content
+            with open(res_path, 'wb') as handler:
+                handler.write(image_data)
+        except: pass
+
         return url
+    except:
+        return PATH_IMG_POKEBOLA
 
 # initialize_session()
 
