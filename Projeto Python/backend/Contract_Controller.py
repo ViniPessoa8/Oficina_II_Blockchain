@@ -9,6 +9,8 @@ install_solc(_solc_version)
 w3 = Web3(HTTPProvider(constants.PROVIDER_URL))
 w3.eth.default_account = w3.eth.accounts[0]
 
+###### Contract FIle ######
+
 @staticmethod
 def open_contract_file(path):
     with open(path, 'r') as file:
@@ -19,6 +21,8 @@ def open_contract_file(path):
 @staticmethod
 def open_contract_file_by_name(filename):
     return open_contract_file(constants.CONTRACTS_ABSOLUTE_PATH + "%s.sol" % filename)
+
+###### Contract Compilation ######
 
 @staticmethod
 def compile_contract_file_by_filename(filename):
@@ -44,6 +48,15 @@ def compile_contract_file(contract_file):
     )
     return compiled_solidity
 
+###### Bytecode ######
+
+@staticmethod
+def get_contract_bytecode_from_compiled_solidity(compiled_solidity):
+    res = compiled_solidity["contracts"]["Projeto Python\\contracts\\Pokemon.sol"]["Pokemon"]["evm"]["bytecode"]["object"]
+    return res
+
+###### ABI ######
+
 @staticmethod
 def get_contract_abi_from_compiled_solidity(compiled_solidity):
     abis = []
@@ -53,11 +66,6 @@ def get_contract_abi_from_compiled_solidity(compiled_solidity):
         abis.append((key, abi))
     
     return abis
-
-@staticmethod
-def get_contract_bytecode_from_compiled_solidity(compiled_solidity):
-    res = compiled_solidity["contracts"]["Projeto Python\\contracts\\Pokemon.sol"]["Pokemon"]["evm"]["bytecode"]["object"]
-    return res
 
 @staticmethod
 def get_contract_abi_by_filename(filename):
@@ -70,6 +78,8 @@ def get_contract_abi_by_filename(filename):
 def get_contract_abi(compiled_solidity):
     res = compiled_solidity["contracts"]["Projeto Python\\contracts\\Pokemon.sol"]["Pokemon"]["abi"]
     return res
+
+###### Contract Deployment ######
 
 @staticmethod
 def initiate_contract(compiled_contract, *args):

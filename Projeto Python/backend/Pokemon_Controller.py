@@ -141,11 +141,30 @@ def get_available_pokemons():
 if __name__ == "__main__":
     print(w3.api)
 
+    # Creating Contracts
     initiated_contract = Contract_Controller.initiate_contract_by_filename("Pokemon", "Pikachu", 10, 9)
     initiated_contract = Contract_Controller.initiate_contract_by_filename("Pokemon", "Pikachu", 10, 9)
     initiated_contract = Contract_Controller.initiate_contract_by_filename("Pokemon", "Pikachu", 10, 9)
     print(initiated_contract)
     print(get_name(initiated_contract))
     
+    # Getting All existing pokemons TODO: not working
     pokemons = get_available_pokemons()
     print("Pokemons: %s" % pokemons)
+
+    # Pokemons Takes Damage
+    print("Life: %s" % get_life())
+    take_damage(2)
+    print("Life: %s" % get_life())
+
+    # Changes pokemons between owners (PRIVATE KEY must be from the pokemon's owner)
+    oldOwner = Web3.toChecksumAddress(w3.eth.accounts[0])
+    newOwner = Web3.toChecksumAddress(w3.eth.accounts[1])
+    print(oldOwner)
+    print(newOwner)
+
+    contract = Web3.toChecksumAddress("0x27A69e7C00D775fb73d7c21F92E3fae21ec2e0d2") # Given contract (Need to be deployed). Can be deployed in Remix IDE
+    print("Contract: %s" % contract)
+
+    change_owner(oldOwner, newOwner, contract)
+
