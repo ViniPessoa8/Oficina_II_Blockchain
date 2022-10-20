@@ -1,14 +1,22 @@
+from cgitb import text
+from email.mime import image
 from mimetypes import init
 import streamlit as st
 import requests
 from Blockchain import Blockchain
 from SmartContract import SmartContract
 from Transaction import Transaction
-
+import os
 
 SESSION_DATA = 'data'
 SESSION_LOG = 'log'
+
 PATH_IMG_POKEBOLA = "res\pokebola.png"
+PATH_RES = "res\\pokemons\\"
+PATH_API = "https://pokeapi.glitch.me/v1/pokemon/"
+
+PRIV_KEY = "0x57060eD7BbFEe82aDe47317A1Cb508090dac7119"
+
 
 blockchain = Blockchain(2)
 sc = SmartContract(blockchain)
@@ -51,12 +59,13 @@ def show_trade_form():
     pokedata = st.session_state[SESSION_DATA]
     nomes_treinadores = pokedata.keys()
 
-    id_treinador_01 = st.selectbox(label="Treinador 01", options=nomes_treinadores)
-    id_pokemon = st.selectbox(label="select a Pokemon", options=pokedata[id_treinador_01].pokemons)
+    id_treinador_01 = st.text_input(label="Treinador 01", placeholder="0x57060eD7BbFEe82aDe47317A1Cb508090dac7119", value=PRIV_KEY)
+    # id_pokemon = st.selectbox(label="select a Pokemon", options=pokedata[id_treinador_01].pokemons)
 
+    # Lista de nomes sem o id do treinador 1
     nomes_sem_treinador_01 = list(filter(lambda x: x != id_treinador_01, nomes_treinadores))
 
-    id_treinador_02 = st.selectbox(label="Treinador 02", options=nomes_sem_treinador_01)
+    id_treinador_02 = st.text_input(label="Treinador 02", placeholder="0x0d4ba3726fc5BCf535AA3BA427758C85d1e959D5")
     
     col_1, col_2, _, col_4 = st.columns(4)
 
@@ -91,17 +100,27 @@ def show_blockchain_log():
     pass
 
 def get_sprite_url(pokemon_name):
-    api = f"https://pokeapi.glitch.me/v1/pokemon/{pokemon_name}"
-    res = requests.get(api)
 
-    url = 'foi nao'
+    res_path = f"{PATH_RES}{pokemon_name}.png"
+
+    if os.path.isfile(res_path): return res_path
+
+    api = f"{PATH_API}{pokemon_name}"
+    res = requests.get(api)
 
     try:
         res = res.json()
-        return res[0]["sprite"]
-    except:
-        url = PATH_IMG_POKEBOLA
+        url = res[0]["sprite"]
+
+        try:
+            image_data = requests.get(url).content
+            with open(res_path, 'wb') as handler:
+                handler.write(image_data)
+        except: pass
+
         return url
+    except:
+        return PATH_IMG_POKEBOLA
 
 # initialize_session()
 
