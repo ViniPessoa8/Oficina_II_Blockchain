@@ -143,8 +143,8 @@ if __name__ == "__main__":
 
     # Creating Contracts
     initiated_contract = Contract_Controller.initiate_contract_by_filename("Pokemon", "Pikachu", 10, 9)
-    initiated_contract = Contract_Controller.initiate_contract_by_filename("Pokemon", "Pikachu", 10, 9)
-    initiated_contract = Contract_Controller.initiate_contract_by_filename("Pokemon", "Pikachu", 10, 9)
+    initiated_contract = Contract_Controller.initiate_contract_by_filename("Pokemon", "Charizard", 9, 8)
+    initiated_contract = Contract_Controller.initiate_contract_by_filename("Pokemon", "Bulbassauro", 6, 5)
     print(initiated_contract)
     print(get_name(initiated_contract))
     
